@@ -1,0 +1,14 @@
+[vendor]
+name = "Noda Audio"
+id = "com.nodaaudio"
+url = "https://example.com"
+au_manufacturer = "NAud"
+
+[[plugin]]
+name = "Noda Audio Demo"
+bundle_id = "noda-audio-demo"
+crate = "noda-audio"
+category = "effect"
+fourcc = "NodA"
+au_tag = "Effects"
+vst3_subcategory = "Tools"

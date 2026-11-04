@@ -1,0 +1,42 @@
+[package]
+name = "noda-audio"
+version = "0.1.0"
+edition = "2024"
+description = "Audio UI components for egui: level meters, faders, knobs and dB scales for truce plugins and standalone apps"
+license = "MIT"
+
+[lib]
+name = "noda_audio"
+crate-type = ["cdylib", "staticlib", "rlib"]
+
+[[bin]]
+name = "noda-audio-standalone"
+path = "src/main.rs"
+required-features = ["standalone"]
+
+[features]
+default = ["clap", "vst3", "standalone"]
+clap = ["dep:truce-clap", "dep:clap-sys"]
+vst3 = ["dep:truce-vst3"]
+standalone = ["dep:truce-standalone"]
+shell = ["truce/shell"]
+rt-paranoid = ["truce/rt-paranoid"]
+
+[dependencies]
+# Components depend on egui only, never on truce: the same widgets work in
+# any egui app, truce plugin or not. Version pinned to truce-egui's own
+# dependency so one egui gets linked into the editor.
+egui = "0.34"
+
+truce = { version = "6.3" }
+truce-egui = { version = "6.3" }
+truce-clap = { version = "6.3", optional = true }
+truce-vst3 = { version = "6.3", optional = true }
+truce-standalone = { version = "6.3", features = ["gui"], optional = true }
+clap-sys = { version = "0.5", optional = true }
+
+[profile.shell]
+inherits = "release"
+
+[dev-dependencies]
+eframe = { version = "0.34", default-features = false, features = ["default_fonts", "wgpu", "accesskit"] }
